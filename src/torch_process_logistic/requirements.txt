@@ -1,0 +1,5 @@
+pandas
+nltk
+joblib
+scikit-learn
+torch
