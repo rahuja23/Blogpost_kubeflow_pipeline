@@ -1,0 +1,7 @@
+pandas
+nltk
+joblib
+regex
+scikit-learn
+tqdm
+

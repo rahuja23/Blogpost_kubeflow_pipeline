@@ -1,0 +1,11 @@
+regex
+string
+pandas
+torch
+numpy
+nltk
+scikit-learn
+tqdm
+flask
+
+

@@ -1,0 +1,7 @@
+pandas
+string
+nltk
+joblib
+scikit-learn
+tqdm
+typing
