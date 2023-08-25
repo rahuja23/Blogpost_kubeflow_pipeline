@@ -92,11 +92,19 @@ def predict_tweet_torch(x, theta_toc):
     return y_pred
 
 def http_port(args):
+<<<<<<< HEAD
     log_folder = args["log_folder"]
     sklearn_folder = args["sklearn_folder"]
     logistic_folder = args["logistic_folder"]
     torch_folder = args["torch_folder"]
     svm_folder = args["svm_folder"]
+=======
+    log_folder = args.log_folder
+    sklearn_folder = args.sklearn_folder
+    logistic_folder = args.logistic_folder
+    torch_folder = args.torch_folder
+    svm_folder = args.svm_folder
+>>>>>>> 9643c8dbf8c807e406368a719a7a61d4b9b6399e
     data.path.append(log_folder)
 
     app = Flask(__name__, template_folder='/http-port/templates')
@@ -108,6 +116,10 @@ def http_port(args):
     @app.route('/predict', methods=['POST'])
     def predict():
         text_processor = Preprocess()
+<<<<<<< HEAD
+=======
+
+>>>>>>> 9643c8dbf8c807e406368a719a7a61d4b9b6399e
         bow_word_frequency = joblib.load(open(log_folder + '/bow_word_frequency.pkl', 'rb'))
         theta_ns = joblib.load(open(logistic_folder + '/logistic.pkl', 'rb'))
         clf = joblib.load(open(sklearn_folder + '/sklearn.pkl', 'rb'))

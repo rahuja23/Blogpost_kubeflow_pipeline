@@ -2,6 +2,9 @@
 <project version="4">
   <component name="VcsDirectoryMappings">
     <mapping directory="$PROJECT_DIR$" vcs="Git" />
+<<<<<<< HEAD
     <mapping directory="$PROJECT_DIR$/Kubeflow_pipeline_nlp" vcs="Git" />
+=======
+>>>>>>> 9643c8dbf8c807e406368a719a7a61d4b9b6399e
   </component>
 </project>

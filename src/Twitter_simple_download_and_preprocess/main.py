@@ -1,4 +1,7 @@
+<<<<<<< HEAD
 import os.path
+=======
+>>>>>>> 9643c8dbf8c807e406368a719a7a61d4b9b6399e
 import re
 import string
 import pandas as pd
@@ -13,6 +16,7 @@ from nltk.tokenize import TweetTokenizer
 from sklearn.model_selection import train_test_split
 from tqdm import tqdm
 from nltk import data
+<<<<<<< HEAD
 import mlflow
 import uuid
 from dotenv import load_dotenv
@@ -23,6 +27,12 @@ os.getenv("MLFLOW_S3_ENDPOINT_URL")
 class Twitter_Preprocess():
     def __init__(self):
 
+=======
+from typing import NamedTuple
+
+class Twitter_Preprocess():
+    def __init__(self):
+>>>>>>> 9643c8dbf8c807e406368a719a7a61d4b9b6399e
         self.tokenizer = TweetTokenizer(preserve_case=False, strip_handles=True,
                                         reduce_len=True)
         self.stopwords_en = stopwords.words('english')
@@ -72,6 +82,7 @@ def build_bow_dict(tweets, labels):
         for word in tweet:
             freq[(word, label)] = freq.get((word, label), 0) + 1
     return freq
+<<<<<<< HEAD
 
 def twitter_sample_download_and_preprocess(args):
     load_dotenv()
@@ -148,10 +159,60 @@ def parse_args():
     parser.add_argument("--run_id", type=str, default="")
     parser.add_argument("--tracking_uri", type=str, default="http://127.0.0.1:5000")
     parser.add_argument("--experiment_id", type=str, default=1)
+=======
+def twitter_sample_download_and_preprocess(args) -> NamedTuple('Outputs', [('logdir', str)]):
+    log_folder = args.log_folder
+    print(log_folder)
+    data.path.append(log_folder)
+    data.path.append(log_folder)
+    nltk.download('twitter_samples', download_dir=log_folder)
+    nltk.download('stopwords', download_dir=log_folder)
+    pos_tweets = twitter_samples.strings('positive_tweets.json')
+    neg_tweets = twitter_samples.strings('negative_tweets.json')
+    print(f"positive sentiment GOOD total samples {len(pos_tweets)}")
+    print(f"negative sentiment  Bad total samples {len(neg_tweets)}")
+    twitter_text_processor = Twitter_Preprocess()
+    processed_pos_tweets = twitter_text_processor.preprocess(pos_tweets)
+    processed_neg_tweets = twitter_text_processor.preprocess(neg_tweets)
+
+    labels = [1 for i in range(len(processed_pos_tweets))]
+    labels.extend([0 for i in range(len(processed_neg_tweets))])
+
+    twitter_processed_corpus = processed_pos_tweets + processed_neg_tweets
+    bow_word_frequency = build_bow_dict(twitter_processed_corpus, labels)
+
+    shuffle(processed_pos_tweets)
+    shuffle(processed_neg_tweets)
+
+    positive_tweet_label = [1 for i in processed_pos_tweets]
+    negative_tweet_label = [0 for i in processed_neg_tweets]
+
+    tweet_df = pd.DataFrame(list(zip(twitter_processed_corpus,
+                                     positive_tweet_label + negative_tweet_label)),
+                            columns=["processed_tweet", "label"])
+
+    train_X_tweet, test_X_tweet, train_Y, test_Y = train_test_split(tweet_df["processed_tweet"],
+                                                                    tweet_df["label"],
+                                                                    test_size=0.20,
+                                                                    stratify=tweet_df["label"])
+
+    print(f"train_X_tweet {train_X_tweet.shape}, test_X_tweet {test_X_tweet.shape}")
+    print(f"train_Y {train_Y.shape}, test_Y {test_Y.shape}")
+    joblib.dump(bow_word_frequency, log_folder + '/bow_word_frequency.pkl')
+    joblib.dump(train_X_tweet, log_folder + '/train_X_tweet.pkl')
+    joblib.dump(test_X_tweet, log_folder + '/test_X_tweet.pkl')
+    joblib.dump(train_Y, log_folder + '/train_Y.pkl')
+    joblib.dump(test_Y, log_folder + '/test_Y.pkl')
+    return log_folder
+def parse_args():
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--log_folder", type=str, default="")
+>>>>>>> 9643c8dbf8c807e406368a719a7a61d4b9b6399e
     args = parser.parse_args()
     return args
 if __name__ =="__main__":
     args = parse_args()
+<<<<<<< HEAD
     args = vars(args)
     client = mlflow.tracking.MlflowClient(tracking_uri=args["tracking_uri"])
     try:
@@ -164,4 +225,8 @@ if __name__ =="__main__":
     args["run_id"]= run_id
     args["experiment_id"]= experiment_id
     twitter_sample_download_and_preprocess(args)
+=======
+    folder = twitter_sample_download_and_preprocess(args)
+
+>>>>>>> 9643c8dbf8c807e406368a719a7a61d4b9b6399e
 

@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 pandas
 nltk
 joblib
@@ -6,3 +7,8 @@ scikit-learn
 tqdm
 mlflow
 python-dotenv
+=======
+numpy
+joblib
+typing
+>>>>>>> 9643c8dbf8c807e406368a719a7a61d4b9b6399e

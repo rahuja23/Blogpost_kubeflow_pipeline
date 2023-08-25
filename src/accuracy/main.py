@@ -1,4 +1,5 @@
 import json
+<<<<<<< HEAD
 
 import argparse
 import os
@@ -16,6 +17,15 @@ def accuracy(args):
         torch_score = float(f.read())
     with open(svm_folder) as f:
         svm_score = float(f.read())
+=======
+from typing import NamedTuple
+import argparse
+def accuracy(args) -> NamedTuple('Outputs', [('mlpipeline_metrics', 'Metrics')]):
+    sklearn_score = args.sklearn_score
+    logistic_score = args.logistic_score
+    torch_score = args.torch_score
+    svm_score = args.svm_score
+>>>>>>> 9643c8dbf8c807e406368a719a7a61d4b9b6399e
     metrics = {
         'metrics': [
             {
@@ -40,6 +50,7 @@ def accuracy(args):
             },
         ]
     }
+<<<<<<< HEAD
     json_object = json.dumps(metrics, indent=4)
     with open(os.path.join(output_folder, "metrics.json"), "w") as outfile:
         outfile.write(json_object)
@@ -51,6 +62,18 @@ def parse_args():
     parser.add_argument("--torch_folder", type= str)
     parser.add_argument("--svm_folder", type= str)
     args = parser.parse_args("--output_dir")
+=======
+    return [json.dumps(metrics)]
+
+def parse_args():
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--sklearn_score", type=float)
+    parser.add_argument("--logistic_score", type = float)
+    parser.add_argument("--torch_score", type= float)
+    parser.add_argument("--svm_score", type= float)
+
+    args = parser.parse_args()
+>>>>>>> 9643c8dbf8c807e406368a719a7a61d4b9b6399e
     return args
 if __name__=="__main__":
     args = parse_args()
