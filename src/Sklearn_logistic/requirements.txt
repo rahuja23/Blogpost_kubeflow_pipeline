@@ -1,0 +1,10 @@
+numpy
+joblib
+typing
+pandas
+nltk
+regex
+scikit-learn
+tqdm
+mlflow
+python-dotenv

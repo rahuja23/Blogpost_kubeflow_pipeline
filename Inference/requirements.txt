@@ -1,0 +1,6 @@
+numpy
+joblib
+nltk
+seldon-core
+pandas
+scikit-learn
